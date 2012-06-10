@@ -8,7 +8,7 @@
 
 #import "SPTextScrollerView.h"
 
-#define SCROLL_PIXELS_PER_UNIT_TIME     15
+#define SCROLL_PIXELS_PER_UNIT_TIME     5
 #define SCROLL_FIRE_INTERVAL            0.1
 
 @interface SPTextScrollerView()
