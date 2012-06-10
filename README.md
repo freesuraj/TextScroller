@@ -10,5 +10,5 @@ Method to use
 
 2.If you like to change the speed of the scrolling , change the value of macros (inside TextScrollerView.h file). Current declaration:
 
-#define SCROLL_PIXELS_PER_UNIT_TIME     5
-#define SCROLL_FIRE_INTERVAL            0.1
+SCROLL_PIXELS_PER_UNIT_TIME     5
+SCROLL_FIRE_INTERVAL            0.1
