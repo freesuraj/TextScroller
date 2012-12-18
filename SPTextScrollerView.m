@@ -96,9 +96,8 @@
     [self addSubview:_containerLabel];
     self.shouldScrollFromRightToLeft = scrollRightToLeft;
   
-	self.timer = [CADisplayLink displayLinkWithTarget:self selector:@selector(scrollView:)];
-	self.timer.frameInterval = SCROLL_FIRE_INTERVAL;
-	[self.timer addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+	[self startScrolling];
+	
 	return self;
 }
 
@@ -127,28 +126,21 @@
 	
 	if(speedToMove < 0 || speedToMove > 100) speedToMove = 5.0;
 	
-    [UIView beginAnimations:@"scroll" context:nil];
-	
     if (self.shouldScrollFromRightToLeft)
 		{
-			self.center = CGPointMake(self.center.x - speedToMove, self.center.y);
-			[UIView commitAnimations];
-        if (self.center.x<=-self.frame.size.width/2) {
-        self.center = CGPointMake(self.frame.size.width+self.frame.size.width, self.center.y);
-        [UIView beginAnimations:@"scrollRepeat" context:nil];
-        self.center = CGPointMake(self.frame.size.width+self.frame.size.width/2, self.center.y);
-        [UIView commitAnimations];
-        }
+			[self scrollTheLabelAtCenterX:self.containerLabel.center.x - speedToMove];
+			if (self.containerLabel.center.x <= -self.containerLabel.frame.size.width/2) {
+				[self scrollTheLabelAtCenterX:self.containerLabel.frame.size.width + self.containerLabel.frame.size.width];
+				[self scrollTheLabelAtCenterX:self.containerLabel.frame.size.width + self.containerLabel.frame.size.width/2];
+			}
     }
-    else {
-        self.center = CGPointMake(self.center.x + speedToMove, self.center.y);
-        [UIView commitAnimations];
-        if (self.center.x>=self.frame.size.width+self.frame.size.width/2) {
-            self.center = CGPointMake(-self.frame.size.width-self.frame.size.width, self.center.y);
-            [UIView beginAnimations:@"scrollRepeat" context:nil];
-            self.center = CGPointMake(-self.frame.size.width/2, self.center.y);
-            [UIView commitAnimations];
-        }
+    else
+		{
+			[self scrollTheLabelAtCenterX:self.containerLabel.center.x + speedToMove];
+			if (self.containerLabel.center.x >= self.containerLabel.frame.size.width + self.containerLabel.frame.size.width/2) {
+				[self scrollTheLabelAtCenterX:-self.containerLabel.frame.size.width - self.containerLabel.frame.size.width];
+				[self scrollTheLabelAtCenterX:-self.containerLabel.frame.size.width/2];
+			}
     }
     
 }
@@ -169,6 +161,15 @@
 - (void) stopScrolling
 {
 	[self.timer removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+}
+
+- (void) scrollTheLabelAtCenterX:(CGFloat)centerX
+{
+	[UIView animateWithDuration:SCROLL_FIRE_INTERVAL animations:^{
+		self.containerLabel.center = CGPointMake(centerX, self.containerLabel.center.y);
+	} completion:^(BOOL finished) {
+		//
+	}];
 }
 
 

@@ -14,7 +14,8 @@
 @property (nonatomic, strong) UIColor *textColor;				// gray by default
 @property (nonatomic, strong) UIFont  *textFont;
 @property (nonatomic, strong) NSString *text;
-@property (nonatomic) BOOL shouldScrollFromRightToLeft;
+@property (nonatomic) BOOL shouldScrollFromRightToLeft;	// direction of scrolling
+@property (nonatomic) BOOL shouldCircleText;						// if turned on, shows tail of the text
 
 // Init Methods
 - (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft;
