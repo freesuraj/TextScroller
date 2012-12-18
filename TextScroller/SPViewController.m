@@ -10,6 +10,14 @@
 #import "SPTextScrollerView.h"
 
 @interface SPViewController ()
+@property (strong, nonatomic) IBOutlet SPTextScrollerView *myTextScroller;
+@property (strong, nonatomic) IBOutlet UISwitch *leftRight;
+@property (strong, nonatomic) IBOutlet UISlider *speedSlider;
+@property (strong, nonatomic) IBOutlet UILabel *sliderValueLabel;
+@property (strong, nonatomic) IBOutlet UIButton *pausePlayButton;
+- (IBAction)pausePlayPressed:(UIButton *)sender;
+- (IBAction)sliderMoved:(UISlider *)sender;
+- (IBAction)leftRightChanged:(UISwitch *)sender;
 
 @end
 
@@ -19,14 +27,21 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    NSString *text = @"i don't know what's going to happen when repeating....";
-    SPTextScrollerView *scrollerView = [[SPTextScrollerView alloc]initWithFrame:CGRectMake(20, 100, 280, 30) Text:text Font:[UIFont systemFontOfSize:20] ScrollDirectionRightToLeft:YES];
-    [self.view addSubview:scrollerView];
-	// Do any additional setup after loading the view, typically from a nib.
+		NSString *text = @"Text moving from right to left.. like a TV News..";
+	[self.myTextScroller setShouldScrollFromRightToLeft:self.leftRight.isOn];
+	[self.myTextScroller setSpeed:self.speedSlider.value];
+	[self.myTextScroller setText:text];
+	[self.sliderValueLabel setText:[NSString stringWithFormat:@"%.1f",self.speedSlider.value]];
+	
 }
 
 - (void)viewDidUnload
 {
+	[self setMyTextScroller:nil];
+	[self setLeftRight:nil];
+	[self setSpeedSlider:nil];
+	[self setSliderValueLabel:nil];
+	[self setPausePlayButton:nil];
     [super viewDidUnload];
     
     // Release any retained subviews of the main view.
@@ -37,4 +52,23 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+- (IBAction)pausePlayPressed:(UIButton *)sender {
+	if([sender.titleLabel.text isEqualToString:@"pause"]){
+		[self.myTextScroller stopScrolling];
+		[sender setTitle:@"scroll" forState:UIControlStateNormal];
+	}
+	else{
+		[self.myTextScroller startScrolling];
+		[sender setTitle:@"pause" forState:UIControlStateNormal];
+	}
+}
+
+- (IBAction)sliderMoved:(UISlider *)sender {
+	self.myTextScroller.speed = sender.value;
+	[self.sliderValueLabel setText:[NSString stringWithFormat:@"%.1f",self.speedSlider.value]];
+}
+
+- (IBAction)leftRightChanged:(UISwitch *)sender {
+	self.myTextScroller.shouldScrollFromRightToLeft = sender.isOn;
+}
 @end

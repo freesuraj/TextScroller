@@ -10,8 +10,18 @@
 
 @interface SPTextScrollerView : UIView
 
-// Init Method
+@property (nonatomic) CGFloat speed;										// Scrolls pixels per unit time, 5.0 by default
+@property (nonatomic, strong) UIColor *textColor;				// gray by default
+@property (nonatomic, strong) UIFont  *textFont;
+@property (nonatomic, strong) NSString *text;
+@property (nonatomic) BOOL shouldScrollFromRightToLeft;
+
+// Init Methods
 - (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft;
+- (id)initWithUILabel:(UILabel *)label;
+
+- (void) startScrolling;
+- (void) stopScrolling;
 
 @end
 
