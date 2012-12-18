@@ -9,11 +9,13 @@
 
 1. **Initiate**
 
-	* <i>Init with UILabel </i>
-			- (id)initWithUILabel:(UILabel *)label;
+  <i>Init with UILabel </i>
+ 
+				- (id)initWithUILabel:(UILabel *)label;
 		
- 	* <i>Init With your frame and text </i>
-			- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft;
+  <i>Init With your frame and text </i>
+ 
+		- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft;
 			
 2. Configurable Parameters
 
