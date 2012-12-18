@@ -27,5 +27,6 @@
 
 
 3. Helper Methods
+
 			- (void) startScrolling;		// Start Scrolling
 			- (void) stopScrolling;			// Pause Scrolling
