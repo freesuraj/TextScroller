@@ -20,8 +20,8 @@
 - (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft;
 - (id)initWithUILabel:(UILabel *)label;
 
-- (void) startScrolling;
-- (void) stopScrolling;
+- (void) startScrolling;		// Start Scrolling
+- (void) stopScrolling;			// Pause Scrolling
 
 @end
 

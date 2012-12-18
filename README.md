@@ -5,15 +5,25 @@
 
 ![ScreenShot](http://www.pictureshoster.com/files/l0m2pvyl7ljc25a3zhvt.png)
 
-###Method to use
+###How to use ?
 
 1. **Initiate**
- 
-		- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft;
 
-2. If you like to change the `speed of the scrolling` , change the value of macros (inside `TextScrollerView.h` *file*). 
+	* <i>Init with UILabel </i>
+			- (id)initWithUILabel:(UILabel *)label;
+		
+ 	* <i>Init With your frame and text </i>
+			- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft;
+			
+2. Configurable Parameters
 
-Current declaration:
+		CGFloat speed;						// Scrolls pixels per unit time, 5.0 by default
+		UIColor *textColor;					// gray by default
+		UIFont  *textFont;
+		NSString *text;
+		BOOL shouldScrollFromRightToLeft;	// direction of scroll
 
-	#define SCROLL_PIXELS_PER_UNIT_TIME     5
-	#define SCROLL_FIRE_INTERVAL            0.1
+
+3. Helper Methods
+			- (void) startScrolling;		// Start Scrolling
+			- (void) stopScrolling;			// Pause Scrolling
