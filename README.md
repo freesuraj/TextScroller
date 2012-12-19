@@ -15,7 +15,8 @@
 		
   <i>Init With your frame and text </i>
  
-		- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft;
+		- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollType:(ScrollerType)scrollType;
+
 			
 2. Configurable Parameters
 
@@ -23,10 +24,20 @@
 		UIColor *textColor;					// gray by default
 		UIFont  *textFont;
 		NSString *text;
-		BOOL shouldScrollFromRightToLeft;	// direction of scroll
+		ScrollerType textScrollerType;			
 
 
 3. Helper Methods
 
 			- (void) startScrolling;		// Start Scrolling
 			- (void) stopScrolling;			// Pause Scrolling
+			
+4. Scroller types
+	
+			typedef enum 
+			{
+			ScrollerTypeRightToLeft		= 0,
+			ScrollerTypeLeftToRight		= 1,
+			ScrollerTypeFloating		= 2,
+			ScrollerTypeUnknown			= -1
+			}ScrollerType;
