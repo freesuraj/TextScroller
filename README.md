@@ -1,19 +1,41 @@
 ##TextScroller
 
+### Description
 
-<i> A text scroller View (scrolls left or right horizontally) </i>
+<i> A text scroller View (scrolls left or right horizontally) </i>.
+ This is a `UIView` that holds a `UILabel` in it. The text of the `UILabel` is scrolled. Three types of scrolling types are available at the moment.
+
+1. Right to Left
+2. Left to Right
+3. Floating
+
+### ScreenShot
+
+This git package contains an example Xcode project. Executing which you would get a screen shot like below.
 
 ![ScreenShot](http://www.pictureshoster.com/files/d72ubnfqxky310441px.png)
 
-###How to use ?
+###Usage
+
+#### Files
+Just copy the following files and put them inside your project. 
+
+1. 	`SPTextScrollerView.h` 	 
+2. `SPTextScrollerView.m` 
+ 
+
+#### Frameworks
+Add `QuartzCore.Framework` into your project
+
+#### Start
 
 1. **Initiate**
 
-  <i>Init with UILabel </i>
+  <i>Init with `UILabel` </i>
  
 				- (id)initWithUILabel:(UILabel *)label;
 		
-  <i>Init With your frame and text </i>
+  <i>Init With your `frame` and `text` </i>
  
 		- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollType:(ScrollerType)scrollType;
 
