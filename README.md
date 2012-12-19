@@ -63,3 +63,6 @@ Add `QuartzCore.Framework` into your project
 			ScrollerTypeFloating		= 2,
 			ScrollerTypeUnknown			= -1
 			}ScrollerType;
+			
+### More
+Follow me [@freesuraj](http://twitter.com/freesuraj) on Twitter for the latest news.
