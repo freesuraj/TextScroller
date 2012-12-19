@@ -16,12 +16,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *pausePlayButton;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segControl;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
-@property (strong, nonatomic) IBOutlet UISwitch *circularSwitch;
 
 - (IBAction)pausePlayPressed:(UIButton *)sender;
 - (IBAction)sliderMoved:(UISlider *)sender;
 - (IBAction)segValueChanged:(UISegmentedControl *)sender;
-- (IBAction)circularSwitchChanged:(UISwitch *)sender;
 
 @end
 
@@ -33,7 +31,7 @@
 	self.view.backgroundColor = [UIColor whiteColor];
 	self.textField.delegate = self;
 	NSString *text = (self.textField.text.length) ? (self.textField.text) : @"Text moving side ways.. right-left or left-right.. like a TV News..";
-	[self.myTextScroller setShouldScrollFromRightToLeft:(self.segControl.selectedSegmentIndex == 0)];
+	[self.myTextScroller setTextScrollerType:self.segControl.selectedSegmentIndex];
 	[self.myTextScroller setSpeed:self.speedSlider.value];
 	[self.myTextScroller setText:text];
 	[self.sliderValueLabel setText:[NSString stringWithFormat:@"%.1f",self.speedSlider.value]];
@@ -48,8 +46,8 @@
 	[self setPausePlayButton:nil];
 	[self setSegControl:nil];
 	[self setTextField:nil];
-	[self setCircularSwitch:nil];
-    [super viewDidUnload];
+  
+	[super viewDidUnload];
     
     // Release any retained subviews of the main view.
 }
@@ -102,10 +100,7 @@
 }
 
 - (IBAction)segValueChanged:(UISegmentedControl *)sender {
-		self.myTextScroller.shouldScrollFromRightToLeft = (sender.selectedSegmentIndex == 0);
+		[self.myTextScroller setTextScrollerType:self.segControl.selectedSegmentIndex];
 }
 
-- (IBAction)circularSwitchChanged:(UISwitch *)sender {
-	
-}
 @end

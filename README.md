@@ -3,7 +3,7 @@
 
 <i> A text scroller View (scrolls left or right horizontally) </i>
 
-![ScreenShot](http://www.pictureshoster.com/files/o96o9zacui90v6nwuqgn.png)
+![ScreenShot](http://www.pictureshoster.com/files/d72ubnfqxky310441px.png)
 
 ###How to use ?
 

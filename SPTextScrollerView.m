@@ -17,12 +17,13 @@
 @property (nonatomic, strong) UILabel *containerLabel;
 @property (nonatomic, strong) CADisplayLink *timer;
 
+@property (nonatomic) BOOL directionRightToLeft;	// direction of scrolling
+
 @end
 
 
 @implementation SPTextScrollerView
 @synthesize containerLabel = _containerLabel;
-@synthesize shouldScrollFromRightToLeft = _shouldScrollFromRightToLeft;
 
 //============================================================================
 #pragma mark - Initialization
@@ -74,12 +75,12 @@
 	return self;
 }
 
-- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollDirectionRightToLeft:(BOOL)scrollRightToLeft
+- (id)initWithFrame:(CGRect)frame Text:(NSString*)text Font:(UIFont*)font ScrollType:(ScrollerType)scrollType
 {
     self = [super initWithFrame:frame];
 	
 	// set its values
-	self.shouldScrollFromRightToLeft = scrollRightToLeft;
+	self.textScrollerType = scrollType;
 	self.textFont = font;
 	self.text = text;
 	
@@ -94,7 +95,7 @@
 	
     _containerLabel.backgroundColor = [UIColor clearColor];
     [self addSubview:_containerLabel];
-    self.shouldScrollFromRightToLeft = scrollRightToLeft;
+    self.textScrollerType = scrollType;
   
 	[self startScrolling];
 	
@@ -110,7 +111,7 @@
 	_containerLabel.textColor = self.textColor ? self.textColor : [UIColor blackColor];
 	_containerLabel.font = self.textFont;
 	
-	NSLog(@"label fram: %@",NSStringFromCGRect(_containerLabel.frame));
+	NSLog(@"label frame: %@, self frame: %@",NSStringFromCGRect(_containerLabel.frame),NSStringFromCGRect(self.frame));
 	[self addSubview:_containerLabel];
 	
 	[self startScrolling];
@@ -126,23 +127,45 @@
 	
 	if(speedToMove < 0 || speedToMove > 100) speedToMove = 5.0;
 	
-    if (self.shouldScrollFromRightToLeft)
-		{
+	switch (self.textScrollerType) {
+		case ScrollerTypeRightToLeft:
+			self.directionRightToLeft = YES;
 			[self scrollTheLabelAtCenterX:self.containerLabel.center.x - speedToMove];
-			if (self.containerLabel.center.x <= -self.containerLabel.frame.size.width/2) {
-				[self scrollTheLabelAtCenterX:self.containerLabel.frame.size.width + self.containerLabel.frame.size.width];
-				[self scrollTheLabelAtCenterX:self.containerLabel.frame.size.width + self.containerLabel.frame.size.width/2];
+			if (CGRectGetMaxX(self.containerLabel.frame) < CGRectGetMinX(self.frame)) {
+				[self scrollTheLabelAtCenterX:self.frame.size.width + self.frame.size.width];
+				[self scrollTheLabelAtCenterX:self.containerLabel.frame.size.width/2 + CGRectGetMaxX(self.frame)];
 			}
-    }
-    else
-		{
+			break;
+		case ScrollerTypeLeftToRight:
+			self.directionRightToLeft = NO;
 			[self scrollTheLabelAtCenterX:self.containerLabel.center.x + speedToMove];
-			if (self.containerLabel.center.x >= self.containerLabel.frame.size.width + self.containerLabel.frame.size.width/2) {
-				[self scrollTheLabelAtCenterX:-self.containerLabel.frame.size.width - self.containerLabel.frame.size.width];
+			if (CGRectGetMinX(self.containerLabel.frame) > CGRectGetMaxX(self.frame)) {
+				[self scrollTheLabelAtCenterX:-self.frame.size.width - self.frame.size.width];
 				[self scrollTheLabelAtCenterX:-self.containerLabel.frame.size.width/2];
 			}
-    }
-    
+			break;
+		case ScrollerTypeFloating:
+			if(self.containerLabel.frame.size.width <= self.frame.size.width)
+				break;
+			
+			if(CGRectGetMaxX(self.containerLabel.frame) > CGRectGetMaxX(self.frame) && self.directionRightToLeft){
+				[self scrollTheLabelAtCenterX:self.containerLabel.center.x - speedToMove];
+				self.directionRightToLeft = YES;
+			}
+			else {
+				[self scrollTheLabelAtCenterX:self.containerLabel.center.x + speedToMove];
+				self.directionRightToLeft = NO;
+				if(CGRectGetMinX(self.containerLabel.frame) >= CGRectGetMinX(self.frame))
+					self.directionRightToLeft = YES;
+			}
+			
+			break;
+		case ScrollerTypeUnknown:
+			break;
+			
+		default:
+			break;
+	}
 }
 
 //============================================================================
